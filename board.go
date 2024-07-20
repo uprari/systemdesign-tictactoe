@@ -18,6 +18,11 @@ type Board struct {
 
 func (b *Board) Mark(s Spotter) {
 	x, y := s.GetPosition()
+	check := b.layout[x][y]
+	if check != nil {
+		fmt.Println("Sorry %s this spot is already taken by %s", s.GetPlayerName(), check.GetPlayerName())
+		return
+	}
 	b.layout[x][y] = s
 }
 func (b *Board) DeclareWinner(winnerName string) {
@@ -30,22 +35,29 @@ func (b *Board) WinnerDecided() (bool, string) {
 }
 
 func (b *Board) Draw() {
+	for j := 0; j < b.y; j++ {
+		fmt.Print("__ ")
+	}
+	fmt.Print("\n")
 	for i := 0; i < b.x; i++ {
 
 		for j := 0; j < b.y; j++ {
 			valueAtSpotter := b.GetValue(i, j)
-			fmt.Println("%s", valueAtSpotter)
-			fmt.Println(" |")
+			fmt.Printf("|%s", valueAtSpotter)
+
 		}
+		fmt.Print(" |")
+		fmt.Print("\n")
 		for j := 0; j < b.y; j++ {
-			fmt.Println("_ ")
+			fmt.Print("__ ")
 		}
+		fmt.Print("\n")
 	}
 }
 
 func (b *Board) GetValue(i, j int) string {
 	if b.layout[i][j] == nil {
-		""
+		return " "
 	}
 	return b.layout[i][j].GetShape()
 }
@@ -56,8 +68,8 @@ func NewBoard(x, y int) *Board {
 		y: y,
 	}
 	b.layout = make([][]Spotter, x)
-	for _, val := range b.layout {
-		val = make([]Spotter, y)
+	for i := range b.layout {
+		b.layout[i] = make([]Spotter, y)
 	}
 	return b
 }

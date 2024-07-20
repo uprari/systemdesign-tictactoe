@@ -17,9 +17,9 @@ func NewPlayer(name, shape string) Player {
 
 func (p *Person) Play() Spotter {
 	var x, y int
-	fmt.Println("pleae enter the coordinates x,y")
+	fmt.Printf("%s pleae enter the coordinates x,y\n", p.Name)
 	fmt.Scanln(&x)
 	fmt.Scanln(&y)
-	spot := NewSpot(p.shape, p.name, x, y)
+	spot := NewSpot(p.Shape, p.Name, x, y)
 	return spot
 }

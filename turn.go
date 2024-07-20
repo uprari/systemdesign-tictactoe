@@ -12,15 +12,15 @@ type Turner interface {
 }
 
 func NewTurner() Turner {
-	return turn{}
+	return &turn{}
 }
 
-func (t turn) AddPlayer(p player) {
-	t.listOfPlayer = append(listOfPlayer, p)
+func (t *turn) AddPlayer(p Player) {
+	t.listOfPlayer = append(t.listOfPlayer, p)
 }
 
 func NewTwoPlayerTurner(p1, p2 Player) Turner {
-	t := turn{}
+	t := &turn{}
 	t.AddPlayer(p1)
 	t.AddPlayer(p2)
 	return t

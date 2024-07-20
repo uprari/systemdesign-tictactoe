@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/uprari/systemdesign-tictactoe/game"
+	game "github.com/uprari/systemdesign-tictactoe"
 )
 
 func main() {
@@ -16,9 +16,13 @@ func main() {
 	turner := game.NewTwoPlayerTurner(playerone, playertwo)
 	getPlayerWithTurn := turner.Iterator()
 	for ; ; winnerfound, winnerName = board.WinnerDecided() {
+		if winnerfound {
+			break
+		}
 		p := getPlayerWithTurn()
-		spot := p.play()
-		marker(spot)
+		spot := p.Play()
+		marker.Mark(spot)
+		board.Draw()
 	}
-	fmt.Println("The winner is %v", board)
+	fmt.Println("The winner is %v", winnerName)
 }
